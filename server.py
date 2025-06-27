@@ -25,6 +25,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Helper function to clean directories
+def cleanup_directory(directory: Path):
+    if directory.exists():
+        for item in directory.iterdir():
+            if item.is_dir():
+                shutil.rmtree(item)
+            else:
+                item.unlink()
+
 # Create a temp upload folder in your project directory
 TEMP_UPLOAD_DIR = Path("temp_uploads")
 TEMP_UPLOAD_DIR.mkdir(exist_ok=True)
@@ -47,6 +56,10 @@ def trial():
 
 @app.post("/upload-and-process")
 async def upload_audio(file: UploadFile = File(...)):
+    # Clean up old files from previous sessions
+    cleanup_directory(TEMP_UPLOAD_DIR)
+    cleanup_directory(PROCESSED_DIR)
+    
     # Validate file extension
     ext = file.filename.split(".")[-1].lower()
     if ext not in ALLOWED_EXTENSIONS:
