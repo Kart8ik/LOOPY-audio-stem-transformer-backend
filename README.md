@@ -39,7 +39,7 @@ To get the backend up and running on your local machine, follow these steps.
 
 1.  **Navigate to the backend directory**:
     ```bash
-    cd lopy_backend_demucs
+    cd LOOPY-audio-stem-transformer-backend
     ```
 2.  **Create and activate a virtual environment** (Recommended):
     - On macOS/Linux:
@@ -50,7 +50,7 @@ To get the backend up and running on your local machine, follow these steps.
     - On Windows:
       ```bash
       python -m venv venv
-      venv\Scripts\activate
+      venv\Scripts\Activate.ps1
       ```
 3.  **Install dependencies**:
     ```bash
