@@ -36,7 +36,15 @@ def create_loop(filepath: str, start_time: float, end_time: float, loop_duration
     
     num_loops = int(required_duration_ms / segment_duration_ms)
 
-    looped_audio = segment * num_loops
+    # Create the first loop without fade-in
+    looped_audio = segment
+    
+    # Add subsequent loops with 5ms fade-in for smooth transitions
+    fade_duration_ms = 5
+    for i in range(1, num_loops):
+        # Apply fade-in to the beginning of each subsequent loop
+        faded_segment = segment.fade_in(fade_duration_ms)
+        looped_audio += faded_segment
 
     output_dir = Path("separated") / "looped"
     output_dir.mkdir(exist_ok=True)
